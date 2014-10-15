@@ -1,0 +1,29 @@
+{
+    "name": "qrisk2-2014",
+    "version": "0.1.0",
+    "description": "QRisk2-2014 10 year cardiovascular risk prediction algorithms",
+    "keywords": [
+        "QRisk",
+        "health",
+        "risk stratification algorithm"
+    ],
+    "bugs": {
+        "url": "https://github.com/BlackPearSw/qrisk2-2014/issues"
+    },
+    "license": "LGPL-3.0+",
+    "contributors": [
+        {
+            "name": "Dunmail Hodkinson",
+            "email": "dunmail@blackpear.com"
+        }
+    ],
+    "main": "./lib/index.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/BlackPearSw/qrisk2-2014.git"
+    },
+    "devDependencies": {
+        "chai": "^1.9.2",
+        "mocha": "^1.21.4"
+    }
+}
