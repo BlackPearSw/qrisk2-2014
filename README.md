@@ -15,7 +15,7 @@ To execute unit tests:
 
     mocha spec/*.js
     
-An additional set of regression tests can be found at qrisk2-2014-regression
+An additional set of regression tests can be found at [qrisk2-2014-regression](https://github.com/BlackPearSw/qrisk2-2014-regression)
 
 Use
 ---
