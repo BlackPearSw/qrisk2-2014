@@ -78,7 +78,23 @@ describe('check', function () {
         });
     });
 
-    describe('isInRange', function () {
+    describe('isInSet', function () {
+        it('should return false when input 5 and set is [1, 2, 3]', function () {
+            var result = utils.isInSet(5, [1, 2, 3]);
+
+            result.should.be.false;
+        });
+
+        it('should return true when input 5 and set is [1, 2, 3, 4, 5]', function () {
+            var result = utils.isInSet(5, [1, 2, 3, 4, 5]);
+
+            result.should.be.true;
+        });
+
+    });
+
+
+        describe('isInRange', function () {
         it('should return false when input 24 and range 25-84', function () {
             var result = utils.isInRange(24, 25, 84);
 

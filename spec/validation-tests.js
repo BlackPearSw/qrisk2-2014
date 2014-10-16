@@ -16,6 +16,7 @@
  */
 var getValidationErrors = require('../lib/validation').getValidationErrors;
 var objectHasProperties = require('../lib/validation').objectHasProperties;
+var propertyIsInSet = require('../lib/validation').propertyIsInSet;
 var propertyIsInRange = require('../lib/validation').propertyIsInRange;
 var propertyIsZeroOrOne = require('../lib/validation').propertyIsZeroOrOne;
 var propertyHasValue = require('../lib/validation').propertyHasValue;
@@ -36,11 +37,11 @@ describe('validation', function () {
             propertyIsZeroOrOne('b_type1'),
             propertyIsZeroOrOne('b_type2'),
             propertyIsInRange('bmi', 20, 40),
-            propertyIsInRange('ethrisk', 1, 9),
+            propertyIsInSet('ethrisk', [1, 2, 3, 4, 5, 6, 7, 8, 9]),
             propertyIsZeroOrOne('fh_cvd'),
             propertyIsInRange('rati', 1, 12),
             propertyIsInRange('sbp', 70, 210),
-            propertyIsInRange('smoke_cat', 0, 4),
+            propertyIsInSet('smoke_cat', [0, 1, 2, 3, 4]),
             propertyHasValue('surv', 10),
             propertyIsInRange('town', -7, 11)
         ];
@@ -85,16 +86,10 @@ describe('validation', function () {
                 field: 'bmi', min: 20, max: 40
             },
             {
-                field: 'ethrisk', min: 1, max: 9
-            },
-            {
                 field: 'rati', min: 1, max: 12
             },
             {
                 field: 'sbp', min: 70, max: 210
-            },
-            {
-                field: 'smoke_cat', min: 0, max: 4
             },
             {
                 field: 'town', min: -7, max: 11
@@ -139,6 +134,40 @@ describe('validation', function () {
                     var result = getValidationErrors(args, rules);
 
                     expect(result).to.include(msg);
+                });
+            });
+        });
+
+        var categoricalFields = [
+            {
+                field: 'ethrisk', expected: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+            },
+            {
+                field: 'smoke_cat', expected: [0, 1, 2, 3, 4]
+            }
+        ];
+        categoricalFields.forEach(function (params) {
+            describe('should check ' + params.field + ' is in set [' + params.expected.join(' ') + ']', function () {
+                var args;
+                var msg = params.field + ' must be in set [' + params.expected.join(' ') + ']';
+                beforeEach(function () {
+                    args = makeValidArgs();
+                });
+
+                it('returning error when ' + params.field + ' is not in set', function () {
+                    args[params.field] = -999;
+
+                    var result = getValidationErrors(args, rules);
+
+                    expect(result).to.include(msg);
+                });
+
+                it('returning no error when ' + params.field + ' is in set', function () {
+                    args[params.field] = params.expected[0];
+
+                    var result = getValidationErrors(args, rules);
+
+                    expect(result).to.not.include(msg);
                 });
             });
         });
